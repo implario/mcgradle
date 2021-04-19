@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '0.14.0'
+}
+
+group = 'dev.implario'
+version = '1.0.2'
+
+gradlePlugin {
+    plugins {
+        greetingsPlugin {
+            id = 'dev.implario.mcgradle'
+            displayName = 'Implario mcgradle'
+            description = 'Gradle plugin for minecraft development'
+            implementationClass = 'dev.implario.mcgradle.McgradlePlugin'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+}
+
+pluginBundle {
+    website = 'https://implario.dev/'
+    vcsUrl = 'https://github.com/implario/mcgradle/'
+    tags = ['minecraft', 'bukkit']
+}
+
+publishing {
+
+    repositories {
+
+        maven {
+            name 'implario'
+            url 'https://repo.implario.dev/public'
+            credentials {
+                username System.getenv("IMPLARIO_REPO_USER")
+                password System.getenv("IMPLARIO_REPO_PASSWORD")
+            }
+        }
+
+    }
+
+}
